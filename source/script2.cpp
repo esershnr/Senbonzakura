@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -498,7 +498,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lPar
 		}
 		
 #ifdef CONFIG_DEBUGGER
-		static UINT sAttachDebuggerMessage = RegisterWindowMessage(_T("AHK_ATTACH_DEBUGGER"));
+		static UINT sAttachDebuggerMessage = RegisterWindowMessage(_T("SBZ_ATTACH_DEBUGGER"));
 		if (iMsg == sAttachDebuggerMessage && !g_Debugger.IsConnected())
 		{
 			char dbg_host[16] = "localhost"; // IPv4 max string len
@@ -886,7 +886,7 @@ DWORD GetAHKInstallDir(LPTSTR aBuf)
 		for (DWORD flag = 0; ; flag = KEY_WOW64_64KEY)
 #endif
 		{
-			DWORD length = ReadRegString(key, _T("SOFTWARE\\AutoHotkey"), _T("InstallDir"), aBuf, MAX_PATH, flag);
+			DWORD length = ReadRegString(key, _T("SOFTWARE\\Senbonzakura"), _T("InstallDir"), aBuf, MAX_PATH, flag);
 			if (length)
 				return length;
 			if (flag)

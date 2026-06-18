@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -336,7 +336,7 @@ void InsertCallStack(HWND re, ErrorBoxParam &error)
 		
 	for (auto cp = stack; ; )
 	{
-		if (auto ext = _tcsstr(cp, _T(".ahk (")))
+		if (auto ext = _tcsstr(cp, _T(".sbz (")))
 		{
 			// Apply CFE_LINK effect (and possibly colour) to the full path.
 			cr.cpMax = cr.cpMin + int(ext - cp) + 4;

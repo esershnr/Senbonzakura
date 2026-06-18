@@ -1,4 +1,4 @@
-﻿//{{NO_DEPENDENCIES}}
+//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by AutoHotkey.rc
 //
@@ -61,4 +61,4 @@
 #define AHK_BIT "32-bit"
 #endif
 
-#define AHK_DESCRIPTION "AutoHotkey " AHK_BIT
+#define AHK_DESCRIPTION "Senbonzakura Sicak Tush"

@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // AutoIt
 //
@@ -959,7 +959,7 @@ bif_impl FResult Download(StrArg aURL, StrArg aFilespec)
 	// requests that lack a user-agent.  Furthermore, it's more professional to have one, in which case it
 	// should probably be kept as simple and unchanging as possible.  Using something like the script's name
 	// as the user agent (even if documented) seems like a bad idea because it might contain personal/sensitive info.
-	HINTERNET hInet = InternetOpen(_T("AutoHotkey"), INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY, NULL, NULL, 0);
+	HINTERNET hInet = InternetOpen(_T("Senbonzakura"), INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY, NULL, NULL, 0);
 	if (!hInet)
 		return FR_E_WIN32;
 

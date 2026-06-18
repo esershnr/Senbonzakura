@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -24,8 +24,8 @@ GNU General Public License for more details.
 // Declare static variables (global to only this file/module, i.e. no external linkage):
 static HANDLE sKeybdMutex = NULL;
 static HANDLE sMouseMutex = NULL;
-#define KEYBD_MUTEX_NAME _T("AHK Keybd")
-#define MOUSE_MUTEX_NAME _T("AHK Mouse")
+#define KEYBD_MUTEX_NAME _T("SBZ Keybd")
+#define MOUSE_MUTEX_NAME _T("SBZ Mouse")
 
 // It's done the following way because:
 // It's unclear that zero is always an invalid thread ID (not even GetWindowThreadProcessId's

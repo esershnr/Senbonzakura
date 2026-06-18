@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -3071,7 +3071,7 @@ public:
 	static void FreeExceptionToken(ResultToken*& aToken);
 
 
-	#define SOUNDPLAY_ALIAS _T("AHK_PlayMe")  // Used by destructor and SoundPlay().
+	#define SOUNDPLAY_ALIAS _T("SBZ_PlayMe")  // Used by destructor and SoundPlay().
 
 	Script();
 	~Script();

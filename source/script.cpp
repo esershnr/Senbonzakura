@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -1116,7 +1116,7 @@ ResultType Script::Edit(LPCTSTR aFileName)
 	{
 		TCHAR class_name[32];
 		GetClassName(hwnd, class_name, _countof(class_name));
-		if (!_tcscmp(class_name, _T("#32770")) || !_tcsnicmp(class_name, _T("AutoHotkey"), 10)) // MessageBox(), InputBox(), FileSelect(), or GUI/script-owned window.
+		if (!_tcscmp(class_name, _T("#32770")) || !_tcsnicmp(class_name, _T("Senbonzakura"), 12)) // MessageBox(), InputBox(), FileSelect(), or GUI/script-owned window.
 			hwnd = NULL;  // Exclude it from consideration.
 	}
 	if (hwnd)  // File appears to already be open for editing, so use the current window.
@@ -3870,15 +3870,15 @@ inline ResultType Script::IsDirective(LPTSTR aBuf)
 		if (!parameter)
 			return ScriptError(ERR_PARAM1_REQUIRED);
 
-		if (!_tcsnicmp(parameter, _T("AutoHotkey"), 10))
+		if (!_tcsnicmp(parameter, _T("Senbonzakura"), 12))
 		{
-			if (!parameter[10]) // Just #requires AutoHotkey; would seem silly to warn the user in this case.
+			if (!parameter[12]) // Just #requires Senbonzakura; would seem silly to warn the user in this case.
 				return CONDITION_TRUE;
 
-			if (IS_SPACE_OR_TAB(parameter[10]))
+			if (IS_SPACE_OR_TAB(parameter[12]))
 			{
 				TCHAR word[32];
-				for (LPCTSTR end, cp = parameter + 11; ; cp = end)
+				for (LPCTSTR end, cp = parameter + 13; ; cp = end)
 				{
 					cp = omit_leading_whitespace(cp);
 					if (!*cp)

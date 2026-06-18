@@ -1,5 +1,5 @@
 
-#define AHK_NAME "AutoHotkey"
+#define AHK_NAME "Senbonzakura"
 #define T_AHK_NAME _T(AHK_NAME)
 
 #ifndef RAW_AHK_VERSION
