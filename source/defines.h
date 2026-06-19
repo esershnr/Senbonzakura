@@ -32,10 +32,10 @@ GNU General Public License for more details.
 #endif
 
 #include "ahkversion.h"
-#define AHK_WEBSITE "https://autohotkey.com"
+#define AHK_WEBSITE "https://github.com/esershnr/Senbonzakura"
 
 #ifdef AUTOHOTKEYSC
-#define SCRIPT_RESOURCE_NAME _T(">AUTOHOTKEY SCRIPT<")
+#define SCRIPT_RESOURCE_NAME _T(">SENBONZAKURA SCRIPT<")
 #else
 #define SCRIPT_RESOURCE_SPEC _T("*#1")
 #define SCRIPT_RESOURCE_NAME MAKEINTRESOURCE(1)
@@ -55,7 +55,7 @@ GNU General Public License for more details.
 #define WINDOW_CLASS_GUI _T("SenbonzakuraGUI") // There's a section in Script::Edit() that relies on these all starting with "AutoHotkey".
 
 #define EXT_AUTOHOTKEY _T(".sbz")
-#define AHK_HELP_FILE _T("AutoHotkey.chm")
+#define AHK_HELP_FILE _T("Senbonzakura.chm")
 
 // AutoIt2 supports lines up to 16384 characters long, and we want to be able to do so too
 // so that really long lines from aut2 scripts, such as a chain of IF commands, can be
