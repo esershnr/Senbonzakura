@@ -1,63 +1,44 @@
-# AutoHotkey #
+# Senbonzakura (Özelleştirilmiş AutoHotkey v2.0.26)
 
-AutoHotkey is a free, open source macro-creation and automation software utility that allows users to automate repetitive tasks. It is driven by a custom scripting language that has special provision for defining keyboard shortcuts, otherwise known as hotkeys.
+Senbonzakura, oyunlardaki anti-cheat sistemlerinin (BattlEye, Easy Anti-Cheat vb.) imza ve pencere tespit engellerini aşmak amacıyla AutoHotkey v2.0.26 kaynak kodu üzerinden özelleştirilmiş, tamamen bağımsız bir makro ve otomasyon motorudur.
 
-https://www.autohotkey.com/
+---
 
+## 🚀 sakura Branch Farkları ve Yapılan Değişiklikler
+Bu branch üzerinde, sistemin hiçbir şekilde "AutoHotkey" izi taşımaması için şu kritik değişiklikler yapılmıştır:
 
-## Support ##
+1. **Uzantı Değişikliği (`.ahk` ➔ `.sbz`):**
+   * Varsayılan `.ahk` uzantısı sistemden tamamen kaldırılmış ve yerine **`.sbz`** uzantısı getirilmiştir. Yorumlayıcı artık sadece `.sbz` dosyalarını çalıştıracak ve hata ayıklama yığınlarında bu uzantıyı arayacaktır.
+2. **Pencere Sınıfları (Window Classes):**
+   * Arka planda tespit edilebilecek `AutoHotkey` ve `AutoHotkeyGUI` pencere sınıf isimleri sırasıyla **`Senbonzakura`** ve **`SenbonzakuraGUI`** olarak değiştirilmiştir.
+3. **Sistem Mutex İsimleri:**
+   * Kancalar (Hooks) tarafından oluşturulan ve anti-cheat'ler tarafından taranan `AHK Keybd` ve `AHK Mouse` mutex isimleri sırasıyla **`SBZ Keybd`** ve **`SBZ Mouse`** olarak güncellenmiştir.
+4. **Metadata & Assembly Kimliği:**
+   * Derlenen yürütülebilir dosyanın (`.exe`) detaylarındaki Şirket Adı (`ES Corp.`), Ürün Adı (`Senbonzakura`), Dosya Açıklaması (`Senbonzakura Sicak Tush`) ve Manifest assembly kimlik bilgileri tamamen değiştirilerek AutoHotkey izleri silinmiştir.
+5. **Dahili Tanımlar & Aliaslar:**
+   * Ses oynatma kütüphanesindeki `AHK_PlayMe` aliası `SBZ_PlayMe` yapılmış ve `InternetOpen` içindeki User-Agent başlığı `Senbonzakura` olarak güncellenmiştir.
 
-The [AutoHotkey Community forum](https://www.autohotkey.com/boards/) is the primary source of support for AutoHotkey.
+---
 
-AutoHotkey v1 is not being maintained, but support is provided by community members.
+## ⚠️ Bu Branch Kullanılırken Dikkat Edilmesi Gerekenler
+* **`.ahk` Uzantısı Desteklenmez:** Yazdığınız script dosyalarını mutlaka `.sbz` uzantısıyla kaydetmelisiniz.
+* **Yorumlayıcı Adı:** Derleme sonrasında exe dosyası doğrudan `Senbonzakura64.exe` (veya 32-bit ise `Senbonzakura32.exe`) olarak çıktı verir.
+* **#Requires Direktifi:** Scriptlerinizin başında sürüm kontrolü yaparken `#Requires AutoHotkey` yerine `#Requires Senbonzakura` kullanmalısınız.
+* **UPX Sıkıştırması:** Exe oluştururken (paketlerken) UPX sıkıştırmasını devre dışı bırakın; aksi halde anti-cheat sistemleri UPX imzasından dolayı programı engelleyebilir.
 
-* **Scripts not working**: For assistance getting code AutoHotkey scripts to work the way you want, start a topic in the [Ask for Help (v2)](https://www.autohotkey.com/boards/viewforum.php?f=82) or [Ask for Help (v1)](https://www.autohotkey.com/boards/viewforum.php?f=76) subforum, depending on your AutoHotkey version.
-* **Bug reporting**: If in doubt about the nature of your issue, please post in [Ask for Help (v2)](https://www.autohotkey.com/boards/viewforum.php?f=82) for confirmation. Otherwise, bugs should be reported in the [Bug Reports](https://www.autohotkey.com/boards/viewforum.php?f=14) subforum.
-* **False positives**: If you notice any AutoHotkey files (downloaded from official sources) are being flagged as suspicious or a virus, they are likely false positives. Please refer to our page on how to resolve or report these [here](https://www.autohotkey.com/download/safe.htm).
-* **Other development topics**: For any other development related enquiries, please utilize the [AutoHotkey Development](https://www.autohotkey.com/boards/viewforum.php?f=37) subforum.
+---
 
+## 🛠️ Nasıl Derlenir?
 
-## How to Compile ##
+Senbonzakura, **Visual Studio 2022** veya **Visual Studio Build Tools 2022** ile C++ araçları yüklü olarak derlenebilir.
 
-AutoHotkey is developed with [Microsoft Visual Studio Community 2022](https://www.visualstudio.com/products/visual-studio-community-vs), which is a free download from Microsoft.
+### VS Code / Antigravity ve MSBuild ile Derleme:
+MSBuild.exe yolunu kullanarak terminalden doğrudan şu komutla temiz ve sıfırdan bir derleme yapabilirsiniz:
 
-  - Get the source code.
-  - Open AutoHotkeyx.sln in Visual Studio.
-  - Select the appropriate Build and Platform.
-  - Build.
+```powershell
+# Projeyi temizle ve yeniden derle (Release x64)
+& "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild\Current\Bin\MSBuild.exe" AutoHotkeyx.sln /t:Clean /p:Configuration=Release /p:Platform=x64
+& "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild\Current\Bin\MSBuild.exe" AutoHotkeyx.sln /p:Configuration=Release /p:Platform=x64
+```
 
-The project is configured in a way that allows building with Visual Studio 2012 or later, but only the 2022 toolset is regularly tested. Some newer C++ language features are used and therefore a later version of the compiler might be required.
-
-
-## Developing in VS Code ##
-
-AutoHotkey v2 can also be built and debugged in VS Code.
-
-Requirements:
-  - [C/C++ for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools). VS Code might prompt you to install this if you open a .cpp file.
-  - [Build Tools for Visual Studio 2022](https://aka.ms/vs/17/release/vs_BuildTools.exe) with the "Desktop development with C++" workload, or similar (some older or newer versions and different products should work).
-
-
-
-## Build Configurations ##
-
-AutoHotkeyx.vcxproj contains several combinations of build configurations.  The main configurations are:
-
-  - **Debug**: AutoHotkey.exe in debug mode.
-  - **Release**: AutoHotkey.exe for general use.
-  - **Self-contained**: AutoHotkeySC.bin, used for compiled scripts.
-
-Secondary configurations are:
-
-  - **(mbcs)**: ANSI (multi-byte character set). Configurations without this suffix are Unicode.
-  - **.dll**: Builds an experimental dll for use hosting the interpreter, such as to enable the use of v1 libraries in a v2 script. See [README-LIB.md](README-LIB.md).
-
-
-## Platforms ##
-
-AutoHotkeyx.vcxproj includes the following Platforms:
-
-  - **Win32**: for Windows 32-bit.
-  - **x64**: for Windows x64.
-
-AutoHotkey supports Windows XP with or without service packs and Windows 2000 via an asm patch (win2kcompat.asm).  Support may be removed if maintaining it becomes non-trivial.  Older versions are not supported.
+Derleme çıktısı projenizin ana dizinindeki `bin\Senbonzakura64.exe` konumunda yer alacaktır.
