@@ -1,18 +1,16 @@
 # Senbonzakura Geliştirme ve Güvenlik Yapılacaklar Listesi (TODO)
 
-## 📌 Sonraki Aşama: Pencere Kriteri İsimlerini Özelleştirme
-Daha ileri düzey bir gizlilik sağlamak için AHK'nin standart pencere arama kriterlerini (`ahk_id`, `ahk_class`, `ahk_exe`, vb.) projedeki C++ kodlarından tamamen değiştirebilirsiniz.
+## 📌 [TAMAMLANDI] Pencere Kriteri İsimlerini Özelleştirme
+Standart pencere arama kriterleri (`ahk_id`, `ahk_class`, `ahk_exe`, vb.) projedeki C++ kodlarından başarıyla `sbz_` ön ekiyle değiştirilmiştir.
 
-Bu sayede anti-cheat'in binary (makine kodu) taramalarında hiçbir şekilde bu kancalar geçmeyecektir.
-
-### Değiştirilmesi Planlanan Kelimeler:
+### Değiştirilen Kelimeler:
 * `ahk_id` ➔ `sbz_id`
 * `ahk_class` ➔ `sbz_class`
 * `ahk_exe` ➔ `sbz_exe`
 * `ahk_pid` ➔ `sbz_pid`
 * `ahk_group` ➔ `sbz_group`
 
-> ⚠️ **Not:** Bu değişikliği yaptıktan sonra `.sbz` uzantılı scriptlerinizi yazarken de `WinExist("sbz_exe chrome.exe")` şeklinde yazmanız gerekecektir.
+> ⚠️ **Not:** Artık `.sbz` uzantılı scriptlerinizi yazarken de `WinExist("sbz_exe chrome.exe")` şeklinde yazmanız gerekmektedir.
 
 ---
 

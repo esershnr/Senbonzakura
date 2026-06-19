@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -31,7 +31,7 @@ static FResult WinAct(WINTITLE_PARAMETERS_DECL, BuiltInFunctionID action, optl<d
 	// Set initial guess for is_ahk_group (further refined later).  For ahk_group, WinText,
 	// ExcludeTitle, and ExcludeText must be blank so that they are reserved for future use
 	// (i.e. they're currently not supported since the group's own criteria take precedence):
-	bool is_ahk_group = !_tcsnicmp(aTitle, _T("ahk_group"), 9) && !*aText
+	bool is_ahk_group = !_tcsnicmp(aTitle, _T("sbz_group"), 9) && !*aText
 		&& aExcludeTitle.is_blank_or_omitted() && aExcludeText.is_blank_or_omitted();
 	// The following is not quite accurate since is_ahk_group is only a guess at this stage, but
 	// given the extreme rarity of the guess being wrong, this shortcut seems justified to reduce

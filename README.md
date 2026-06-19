@@ -22,9 +22,25 @@ Bu branch üzerinde, sistemin hiçbir şekilde "AutoHotkey" izi taşımaması i�
 
 ## ⚠️ Bu Branch Kullanılırken Dikkat Edilmesi Gerekenler
 * **`.ahk` Uzantısı Desteklenmez:** Yazdığınız script dosyalarını mutlaka `.sbz` uzantısıyla kaydetmelisiniz.
+* **Pencere Kriter Ön Eki Değişti (`ahk_` ➔ `sbz_`):** Scriptlerinizde pencere seçerken kullanılan `ahk_id`, `ahk_class`, `ahk_exe`, `ahk_pid` ve `ahk_group` kriterleri yerine artık sırasıyla **`sbz_id`**, **`sbz_class`**, **`sbz_exe`**, **`sbz_pid`** ve **`sbz_group`** kullanmalısınız (Örn: `WinExist("sbz_exe chrome.exe")`).
 * **Yorumlayıcı Adı:** Derleme sonrasında exe dosyası doğrudan `Senbonzakura64.exe` (veya 32-bit ise `Senbonzakura32.exe`) olarak çıktı verir.
 * **#Requires Direktifi:** Scriptlerinizin başında sürüm kontrolü yaparken `#Requires AutoHotkey` yerine `#Requires Senbonzakura` kullanmalısınız.
 * **UPX Sıkıştırması:** Exe oluştururken (paketlerken) UPX sıkıştırmasını devre dışı bırakın; aksi halde anti-cheat sistemleri UPX imzasından dolayı programı engelleyebilir.
+
+---
+
+## 🔄 Eski Scriptleri Dönüştürme (ahk2sbz.py)
+Elinizdeki mevcut `.ahk` uzantılı script dosyalarını Senbonzakura formatına hızlıca dönüştürebilmek için projenin kök dizininde yer alan `ahk2sbz.py` betiğini kullanabilirsiniz.
+
+* **Tek bir dosyayı dönüştürmek için:**
+  ```cmd
+  python ahk2sbz.py C:\Yol\scriptiniz.ahk
+  ```
+* **Bir klasördeki tüm dosyaları toplu dönüştürmek için:**
+  ```cmd
+  python ahk2sbz.py C:\Yol\Klasorunuz
+  ```
+*Bu betik eski dosyalardaki `ahk_` kriterlerini `sbz_` olarak ve `#Requires AutoHotkey` ifadelerini güncelleyerek `.sbz` uzantılı yeni dosyalar oluşturur.*
 
 ---
 

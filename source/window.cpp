@@ -1,4 +1,4 @@
-﻿/*
+/*
 AutoHotkey
 
 Copyright 2003-2009 Chris Mallett (support@autohotkey.com)
@@ -1375,7 +1375,7 @@ ResultType WindowSearch::SetCriteria(ScriptThreadSettings &aSettings, LPCTSTR aT
 
 	for (mCriteria = 0, start = aTitle; this_criterion; start = next_value, this_criterion = next_criterion)
 	{
-		for (next_criterion = 0, end = start; end = tcscasestr(end, _T("ahk_")); end += 4)
+		for (next_criterion = 0, end = start; end = tcscasestr(end, _T("sbz_")); end += 4)
 		{
 			// To reduce ambiguity, the following requires that any "ahk_" criteria beyond the first
 			// be preceded by at least one space or tab:
