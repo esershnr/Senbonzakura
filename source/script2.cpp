@@ -557,7 +557,7 @@ void LaunchAutoHotkeyUtil(LPTSTR aFile, bool aIsScript)
 		return;
 #ifndef AUTOHOTKEYSC
 	// If it's a script in our directory, use our EXE to run it.
-	TCHAR buf[64]; // More than enough for "/script WindowSpy.ahk".
+	TCHAR buf[64]; // More than enough for "/script WindowSpy.sbz".
 	if (aIsScript && our_file)
 	{
 		sntprintf(buf, _countof(buf), _T("/script %s"), aFile);
@@ -577,7 +577,7 @@ void LaunchAutoHotkeyUtil(LPTSTR aFile, bool aIsScript)
 
 void LaunchWindowSpy()
 {
-	LaunchAutoHotkeyUtil(_T("WindowSpy.ahk"), true);
+	LaunchAutoHotkeyUtil(_T("WindowSpy.sbz"), true);
 }
 
 void LaunchAutoHotkeyHelp()

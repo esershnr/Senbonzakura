@@ -17,6 +17,7 @@ Bu branch üzerinde, sistemin hiçbir şekilde "AutoHotkey" izi taşımaması i�
    * Derlenen yürütülebilir dosyanın (`.exe`) detaylarındaki Şirket Adı (`ES Corp.`), Ürün Adı (`Senbonzakura`), Dosya Açıklaması (`Senbonzakura Sicak Tush`) ve Manifest assembly kimlik bilgileri tamamen değiştirilerek AutoHotkey izleri silinmiştir.
 5. **Dahili Tanımlar & Aliaslar:**
    * Ses oynatma kütüphanesindeki `AHK_PlayMe` aliası `SBZ_PlayMe` yapılmış ve `InternetOpen` içindeki User-Agent başlığı `Senbonzakura` olarak güncellenmiştir.
+   * GUI kontrollerine yazılan pencere property'leri `ahk_dlg` ve `ahk_autosize` sırasıyla `sbz_dlg` ve `sbz_autosize`, kullanıcı kütüphane klasörü `Belgeler\AutoHotkey\Lib` yerine `Belgeler\Senbonzakura\Lib`, Window Spy `WindowSpy.sbz` olarak değiştirilmiştir.
 
 ---
 
@@ -24,6 +25,7 @@ Bu branch üzerinde, sistemin hiçbir şekilde "AutoHotkey" izi taşımaması i�
 * **`.ahk` Uzantısı Desteklenmez:** Yazdığınız script dosyalarını mutlaka `.sbz` uzantısıyla kaydetmelisiniz.
 * **Pencere Kriter Ön Eki Değişti (`ahk_` ➔ `sbz_`):** Scriptlerinizde pencere seçerken kullanılan `ahk_id`, `ahk_class`, `ahk_exe`, `ahk_pid` ve `ahk_group` kriterleri yerine artık sırasıyla **`sbz_id`**, **`sbz_class`**, **`sbz_exe`**, **`sbz_pid`** ve **`sbz_group`** kullanmalısınız (Örn: `WinExist("sbz_exe chrome.exe")`).
 * **Yorumlayıcı Adı:** Derleme sonrasında exe dosyası doğrudan `Senbonzakura64.exe` (veya 32-bit ise `Senbonzakura32.exe`) olarak çıktı verir.
+* **Yerleşik Değişkenler:** `A_AhkPath` ve `A_AhkVersion` yerine **`A_SbzPath`** ve **`A_SbzVersion`** kullanılır.
 * **#Requires Direktifi:** Scriptlerinizin başında sürüm kontrolü yaparken `#Requires AutoHotkey` yerine `#Requires Senbonzakura` kullanmalısınız.
 * **UPX Sıkıştırması:** Exe oluştururken (paketlerken) UPX sıkıştırmasını devre dışı bırakın; aksi halde anti-cheat sistemleri UPX imzasından dolayı programı engelleyebilir.
 
@@ -40,7 +42,7 @@ Elinizdeki mevcut `.ahk` uzantılı script dosyalarını Senbonzakura formatına
   ```cmd
   python ahk2sbz.py C:\Yol\Klasorunuz
   ```
-*Bu betik eski dosyalardaki `ahk_` kriterlerini `sbz_` olarak ve `#Requires AutoHotkey` ifadelerini güncelleyerek `.sbz` uzantılı yeni dosyalar oluşturur.*
+*Bu betik eski dosyalardaki `ahk_` kriterlerini `sbz_` olarak, `A_AhkPath`/`A_AhkVersion` değişkenlerini `A_SbzPath`/`A_SbzVersion` olarak ve `#Requires AutoHotkey` ifadelerini güncelleyerek `.sbz` uzantılı yeni dosyalar oluşturur.*
 
 ---
 

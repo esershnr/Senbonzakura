@@ -155,8 +155,6 @@ FuncEntry g_BIF[] =
 // name to reduce code size and speed up the comparisons.
 VarEntry g_BIV_A[] =
 {
-	A_(AhkPath),
-	A_(AhkVersion),
 	A_w(AllowMainWindow),
 	A_x(AppData, BIV_SpecialFolderPath),
 	A_x(AppDataCommon, BIV_SpecialFolderPath),
@@ -247,6 +245,8 @@ VarEntry g_BIV_A[] =
 	A_x(ProgramsCommon, BIV_SpecialFolderPath),
 	A_(PtrSize),
 	A_w(RegView),
+	A_x(SbzPath, BIV_AhkPath),
+	A_x(SbzVersion, BIV_AhkVersion),
 	A_(ScreenDPI),
 	A_x(ScreenHeight, BIV_ScreenWidth_Height),
 	A_x(ScreenWidth, BIV_ScreenWidth_Height),
@@ -486,7 +486,7 @@ ResultType Script::Init(LPTSTR aScriptFilename)
 		// path awareness enabled.
 		if (buf_length == _countof(buf)) // It was truncated.
 			return FAIL; // Seems the safest option for this unlikely case.
-		ConvertFilespecToCorrectCase(buf, _countof(buf), buf_length); // Normalize the case for A_AhkPath.  This might change the length, e.g. due to expansion of 8.3 filename.
+		ConvertFilespecToCorrectCase(buf, _countof(buf), buf_length); // Normalize the case for A_SbzPath.  This might change the length, e.g. due to expansion of 8.3 filename.
 		mOurEXE = SimpleHeap::Alloc(buf, buf_length);
 		LPTSTR last_backslash = _tcsrchr(buf, '\\');
 		if (last_backslash) // Probably always true due to the nature of GetModuleFileName().
@@ -504,7 +504,7 @@ ResultType Script::Init(LPTSTR aScriptFilename)
 #else
 #ifdef _DEBUG
 	if (!aScriptFilename)
-		aScriptFilename = _T("Test\\Test.ahk");
+		aScriptFilename = _T("Test\\Test.sbz");
 #endif
 	if (!aScriptFilename)
 	{
@@ -6606,7 +6606,7 @@ ResultType Script::ClassResolutionError(LPCTSTR aErrorText, LPCTSTR aName, Objec
 #define FUNC_LIB_EXT_LENGTH (_countof(FUNC_LIB_EXT) - 1)
 #define FUNC_LOCAL_LIB _T("\\Lib\\") // Needs leading and trailing backslash.
 #define FUNC_LOCAL_LIB_LENGTH (_countof(FUNC_LOCAL_LIB) - 1)
-#define FUNC_USER_LIB _T("\\AutoHotkey\\Lib\\") // Needs leading and trailing backslash.
+#define FUNC_USER_LIB _T("\\Senbonzakura\\Lib\\") // Needs leading and trailing backslash.
 #define FUNC_USER_LIB_LENGTH (_countof(FUNC_USER_LIB) - 1)
 #define FUNC_STD_LIB _T("\\Lib\\") // Needs leading and trailing backslash.
 #define FUNC_STD_LIB_LENGTH (_countof(FUNC_STD_LIB) - 1)

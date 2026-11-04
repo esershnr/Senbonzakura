@@ -10,6 +10,8 @@ REPLACEMENTS = {
     r'(?i)\bahk_exe\b': 'sbz_exe',
     r'(?i)\bahk_pid\b': 'sbz_pid',
     r'(?i)\bahk_group\b': 'sbz_group',
+    r'(?i)\bA_AhkPath\b': 'A_SbzPath',
+    r'(?i)\bA_AhkVersion\b': 'A_SbzVersion',
     r'(?i)#Requires\s+AutoHotkey': '#Requires Senbonzakura'
 }
 

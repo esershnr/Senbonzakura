@@ -822,8 +822,8 @@ BIV_DECL_R(BIV_AhkPath)
 	TCHAR buf[MAX_PATH];
 	size_t length;
 	if (length = GetAHKInstallDir(buf))
-		// Name "AutoHotkey.exe" is assumed for code size reduction and because it's not stored in the registry:
-		tcslcpy(buf + length, _T("\\AutoHotkey.exe"), MAX_PATH - length); // tcslcpy() in case registry has a path that is too close to MAX_PATH to fit AutoHotkey.exe
+		// Name "Senbonzakura.exe" is assumed for code size reduction and because it's not stored in the registry:
+		tcslcpy(buf + length, _T("\\Senbonzakura.exe"), MAX_PATH - length); // tcslcpy() in case registry has a path that is too close to MAX_PATH to fit Senbonzakura.exe
 	//else leave it blank as documented.
 	_f_return(buf, length);
 #else

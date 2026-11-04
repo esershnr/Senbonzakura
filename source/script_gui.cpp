@@ -60,7 +60,7 @@ LPTSTR GuiControlType::GetTypeName()
 		// Tab2 and Tab3 are changed into Tab at an early stage.
 		if (attrib & GUI_CONTROL_ATTRIB_ALTBEHAVIOR)
 			return sTypeNames[GUI_CONTROL_TAB2];
-		if (GetProp(hwnd, _T("ahk_dlg")))
+		if (GetProp(hwnd, _T("sbz_dlg")))
 			return sTypeNames[GUI_CONTROL_TAB3];
 	}
 	return sTypeNames[type];
@@ -1226,14 +1226,14 @@ FResult GuiType::ControlMove(GuiControlType &aControl, int xpos, int ypos, int w
 		// Check for autosizing flags on this Tab control.
 		int mask = (width == COORD_UNSPECIFIED ? 0 : TAB3_AUTOWIDTH)
 			| (height == COORD_UNSPECIFIED ? 0 : TAB3_AUTOHEIGHT);
-		int autosize = (int)(INT_PTR)GetProp(aControl.hwnd, _T("ahk_autosize"));
+		int autosize = (int)(INT_PTR)GetProp(aControl.hwnd, _T("sbz_autosize"));
 		if (autosize & mask) // There are autosize flags to unset (implies this is a Tab3 control).
 		{
 			autosize &= ~mask; // Unset the flags corresponding to dimensions we've just set.
 			if (autosize)
-				SetProp(aControl.hwnd, _T("ahk_autosize"), (HANDLE)(INT_PTR)autosize);
+				SetProp(aControl.hwnd, _T("sbz_autosize"), (HANDLE)(INT_PTR)autosize);
 			else
-				RemoveProp(aControl.hwnd, _T("ahk_autosize"));
+				RemoveProp(aControl.hwnd, _T("sbz_autosize"));
 		}
 	}
 	return OK;
@@ -3745,7 +3745,7 @@ ResultType GuiType::AddControl(GuiControls aControlType, LPCTSTR aOptions, LPCTS
 	{
 		if (owning_tab_control) // Its tab control exists...
 		{
-			HWND tab_dialog = (HWND)GetProp(owning_tab_control->hwnd, _T("ahk_dlg"));
+			HWND tab_dialog = (HWND)GetProp(owning_tab_control->hwnd, _T("sbz_dlg"));
 			if (tab_dialog)
 			{
 				// Controls in a Tab3 control are created as children of an invisible dialog window
@@ -4564,7 +4564,7 @@ ResultType GuiType::AddControl(GuiControls aControlType, LPCTSTR aOptions, LPCTS
 				}
 			}
 			if (opt.tab_control_autosize)
-				SetProp(control.hwnd, _T("ahk_autosize"), (HANDLE)opt.tab_control_autosize);
+				SetProp(control.hwnd, _T("sbz_autosize"), (HANDLE)opt.tab_control_autosize);
 			// After a new tab control is created, default all subsequently created controls to belonging
 			// to the first tab of this tab control: 
 			mCurrentTabControlIndex = mTabControlCount;
@@ -9991,7 +9991,7 @@ void GuiType::ControlUpdateCurrentTab(GuiControlType &aTabControl, bool aFocusFi
 	//if (!(tab_style & TCS_VERTICAL) || (tab_style & TCS_RIGHT) || !(tab_style & TCS_BUTTONS))
 	//	TabCtrl_AdjustRect(aTabControl.hwnd, FALSE, &tab_rect); // Reduce it to just the area without the tabs, since the tabs have already been redrawn.
 
-	HWND tab_dialog = (HWND)GetProp(aTabControl.hwnd, _T("ahk_dlg"));
+	HWND tab_dialog = (HWND)GetProp(aTabControl.hwnd, _T("sbz_dlg"));
 	if (tab_dialog)
 		// Hiding the tab dialog and showing after re-enabling redraw solves an issue with ActiveX
 		// WebBrowser controls not being redrawn (seems to be a WM_SETREDRAW glitch).
@@ -10318,10 +10318,10 @@ ResultType GuiType::SelectAdjacentTab(GuiControlType &aTabControl, bool aMoveToR
 
 void GuiType::AutoSizeTabControl(GuiControlType &aTabControl)
 {
-	int autosize = (int)(INT_PTR)GetProp(aTabControl.hwnd, _T("ahk_autosize"));
+	int autosize = (int)(INT_PTR)GetProp(aTabControl.hwnd, _T("sbz_autosize"));
 	if (!autosize)
 		return;
-	RemoveProp(aTabControl.hwnd, _T("ahk_autosize"));
+	RemoveProp(aTabControl.hwnd, _T("sbz_autosize"));
 
 	// Below: MUST NOT initialize to zero, since these are screen coordinates
 	// and it is possible to position the GUI prior to this function being called.
@@ -10426,7 +10426,7 @@ ResultType GuiType::CreateTabDialog(GuiControlType &aTabControl, GuiControlOptio
 	tab_dialog = CreateDialogIndirect(g_hInstance, &dlg, mHwnd, TabDialogProc);
 	if (!tab_dialog)
 		return FAIL;
-	if (!SetProp(aTabControl.hwnd, _T("ahk_dlg"), tab_dialog))
+	if (!SetProp(aTabControl.hwnd, _T("sbz_dlg"), tab_dialog))
 	{
 		DestroyWindow(tab_dialog);
 		return FAIL;
@@ -10454,7 +10454,7 @@ ResultType GuiType::CreateTabDialog(GuiControlType &aTabControl, GuiControlOptio
 void GuiType::UpdateTabDialog(HWND aTabControlHwnd)
 // Positions a tab control's container dialog to fill the tab control's display area.
 {
-	HWND tab_dialog = (HWND)GetProp(aTabControlHwnd, _T("ahk_dlg"));
+	HWND tab_dialog = (HWND)GetProp(aTabControlHwnd, _T("sbz_dlg"));
 	if (tab_dialog) // It's a Tab3 control.
 	{
 		RECT rect;
