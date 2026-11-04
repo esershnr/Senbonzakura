@@ -520,10 +520,10 @@ FResult GuiType::Move(optl<int> aX, optl<int> aY, optl<int> aWidth, optl<int> aH
 	GetWindowRect(mHwnd, &rect);
 	rect.right -= rect.left; // Convert to width.
 	rect.bottom -= rect.top; // Convert to height.
-	if (HWND parent = GetParent(mHwnd)) // Allow for +Parent.
-		ScreenToClient(parent, (LPPOINT)&rect); // Must do this before the loop, as coord[] already contains client coords.
-	if (aX.has_value())			rect.left = Scale(aX.value());
-	if (aY.has_value())			rect.top = Scale(aY.value());
+	if (GetWindowLong(mHwnd, GWL_STYLE) & WS_CHILD) // Allow for +Parent.
+		ScreenToClient(GetParent(mHwnd), (LPPOINT)&rect); // Must do this before the loop, as coord[] already contains client coords.
+	if (aX.has_value())			rect.left = aX.value();
+	if (aY.has_value())			rect.top = aY.value();
 	if (aWidth.has_value())		rect.right = Scale(aWidth.value());
 	if (aHeight.has_value())	rect.bottom = Scale(aHeight.value());
 	MoveWindow(mHwnd, rect.left, rect.top, rect.right, rect.bottom, TRUE);
@@ -8509,7 +8509,8 @@ LRESULT CALLBACK GuiWindowProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lPara
 			case NM_RCLICK:
 			case NM_RDBLCLK:
 				gui_event = GUI_EVENT_CONTEXTMENU;
-				event_info = 1 + ((LPNMITEMACTIVATE)lParam)->iItem;
+				if (control.hwnd == nmhdr.hwndFrom) // It's a ListView (not Header) notification.
+					event_info = 1 + ((LPNMITEMACTIVATE)lParam)->iItem;
 				// Post the event unconditionally rather than calling Event(), so that the Gui's
 				// ContextMenu handler can be called even if the control doesn't have one:
 				POST_AHK_GUI_ACTION(pgui->mHwnd, control_index, gui_event, event_info);

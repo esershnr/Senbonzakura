@@ -389,9 +389,8 @@ public:
 		None = 0,
 		Value,
 		Object,
-		DynamicValue,
-		DynamicMethod,
-		DynamicMixed
+		Dynamic,
+		DynamicWithMethod
 	};
 	PropType GetOwnPropType(name_t aName)
 	{
@@ -400,12 +399,13 @@ public:
 			return PropType::None;
 		switch (field->symbol)
 		{
+		case SYM_OBJECT:
+			return PropType::Object;
 		case SYM_DYNAMIC:
-			if (field->prop->Getter() || field->prop->Getter())
-				return field->prop->Method() ? PropType::DynamicMixed : PropType::DynamicValue;
-			return field->prop->Method() ? PropType::DynamicMethod : PropType::None;
-		case SYM_OBJECT: return PropType::Object;
-		default: return PropType::Value;
+			// Current callers don't care whether there's a Setter or Getter, so those aren't checked.
+			return field->prop->Method() ? PropType::DynamicWithMethod : PropType::Dynamic;
+		default:
+			return PropType::Value;
 		}
 	}
 

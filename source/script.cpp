@@ -6179,6 +6179,8 @@ ResultType Script::DefineClass(LPTSTR aBuf)
 		{
 			// Use this object as the class.  At least one other object already refers to it as mBase.
 			class_object = (Object *)result_token.object;
+			if (base_class == class_object || base_class->IsDerivedFrom(class_object))
+				return ClassResolutionError(_T("Invalid base class."), mClassName, base_class);
 			class_object->DeleteOwnProp(_T("Line")); // Remove the error reporting info.
 		}
 	}
@@ -6271,9 +6273,18 @@ ResultType Script::DefineClassProperty(LPTSTR aBuf, bool aStatic, bool &aBufHasB
 	*name_end = 0; // Terminate for aBuf use below.
 	switch (class_object->GetOwnPropType(aBuf))
 	{
+	// Cases like the following were permitted prior to v2.0.27 due to a bug, but only when the
+	// setter is defined first.  Rather than prohibiting it, we now allow it both ways, and rely
+	// on AddFunc to detect conflicts such as having two getters.
+	//   prop {
+	//     set => MsgBox(value)
+	//   }
+	//   prop {
+	//     get => 42
+	//   }
+	//case Object::PropType::Dynamic:
+	//case Object::PropType::DynamicWithMethod:
 	case Object::PropType::Object:
-	case Object::PropType::DynamicValue: // get/set
-	case Object::PropType::DynamicMixed: // get/set and call
 		return ScriptError(ERR_DUPLICATE_DECLARATION, aBuf);
 	}
 	mClassProperty = class_object->DefineProperty(aBuf);
@@ -6569,8 +6580,13 @@ ResultType Script::ResolveClasses()
 	if (!base)
 		return OK;
 	// There is at least one unresolved class.
+	return ClassResolutionError(_T("Unknown class."), name, base);
+}
+
+ResultType Script::ClassResolutionError(LPCTSTR aErrorText, LPCTSTR aName, Object *aObj)
+{
 	ExprTokenType token;
-	if (base->GetOwnProp(token, _T("Line")))
+	if (aObj->GetOwnProp(token, _T("Line")))
 	{
 		// In this case (an object in the mUnresolvedClasses list), it is always an integer
 		// containing the file index and line number:
@@ -6578,7 +6594,7 @@ ResultType Script::ResolveClasses()
 		mCombinedLineNumber = LineNumberType(token.value_int64);
 	}
 	mCurrLine = NULL;
-	return ScriptError(_T("Unknown class."), name);
+	return ScriptError(aErrorText, aName);
 }
 
 
@@ -6855,11 +6871,9 @@ UserFunc *Script::AddFunc(LPCTSTR aFuncName, size_t aFuncNameLength, Object *aCl
 		}
 		else
 		{
-			switch (aClassObject->GetOwnPropType(key))
+			auto pt = aClassObject->GetOwnPropType(key);
+			if (pt == Object::PropType::Object || pt == Object::PropType::DynamicWithMethod)
 			{
-			case Object::PropType::Object:
-			case Object::PropType::DynamicMethod: // call
-			case Object::PropType::DynamicMixed: // get/set and call
 				ScriptError(ERR_DUPLICATE_DECLARATION, new_name);
 				return nullptr;
 			}
@@ -7502,22 +7516,23 @@ Line *Script::PreparseCommands(Line *aStartingLine)
 				Line *block_begin = line->mParentLine;
 				Line *parent = block_begin->mParentLine;
 
-				if (func.mIsFuncExpression // =>
-					&& block_begin->mParentLine
-					&& block_begin->mParentLine->mActionType != ACT_BLOCK_BEGIN)
+				if (func.mIsFuncExpression) // =>
 				{
-					if (line->mNextLine->mActionType == ACT_BLOCK_BEGIN) // It could only be a fat arrow block-begin under these conditions.
-						// There's another =>function after this one (defined within the same
-						// expression), so just continue until the last =>function is found.
-						continue;
-					// This fat arrow function's parent line is a statement with a single-line
-					// action, but that action is currently separated from its parent by one or
+					// If this fat arrow function's parent line is a statement with a single-line
+					// action, that action is currently separated from its parent by one or
 					// more fat arrow functions.  It won't work that way because If/Else/Loop/etc.
 					// all skip an initial ACT_BLOCK_BEGIN (to avoid an extra ExecUntil call),
 					// which would result in executing the function's body instead of skipping it.
-					Line *body = line->mNextLine;
-					// Remove the fat arrow functions to allow the correct body to execute.
-					parent->mNextLine = body, body->mPrevLine = parent;
+					// If the parent is a block, this is needed only to let breakpoints work on the
+					// line which contains the arrow function.
+					Line *next = line->mNextLine;
+					Line *prev = block_begin->mPrevLine;
+					// Remove the fat arrow function from the outer Line list.
+					if (prev)
+						prev->mNextLine = next;
+					else
+						mFirstLine = next;
+					next->mPrevLine = prev;
 					// If this wasn't unset, an error dialog would walk upward to find a previous line,
 					// then step forward and fail to find the original target line.  Instead, it will
 					// display from the function's block-begin downward, usually including the expression

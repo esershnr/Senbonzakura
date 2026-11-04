@@ -1,6 +1,6 @@
-# Senbonzakura (Özelleştirilmiş AutoHotkey v2.0.26)
+# Senbonzakura (Özelleştirilmiş AutoHotkey v2.0.31)
 
-Senbonzakura, oyunlardaki anti-cheat sistemlerinin (BattlEye, Easy Anti-Cheat vb.) imza ve pencere tespit engellerini aşmak amacıyla AutoHotkey v2.0.26 kaynak kodu üzerinden özelleştirilmiş, tamamen bağımsız bir makro ve otomasyon motorudur.
+Senbonzakura, oyunlardaki anti-cheat sistemlerinin (BattlEye, Easy Anti-Cheat vb.) imza ve pencere tespit engellerini aşmak amacıyla AutoHotkey v2.0.31 kaynak kodu üzerinden özelleştirilmiş, tamamen bağımsız bir makro ve otomasyon motorudur.
 
 ---
 
@@ -46,7 +46,7 @@ Elinizdeki mevcut `.ahk` uzantılı script dosyalarını Senbonzakura formatına
 
 ## 🛠️ Nasıl Derlenir?
 
-Senbonzakura, **Visual Studio 2022** veya **Visual Studio Build Tools 2022** ile C++ araçları yüklü olarak derlenebilir.
+Senbonzakura, **Visual Studio 2026** veya **Visual Studio Build Tools 2026** ile C++ araçları yüklü olarak derlenebilir.
 
 ### VS Code / Antigravity ve MSBuild ile Derleme:
 MSBuild.exe yolunu kullanarak terminalden doğrudan şu komutla temiz ve sıfırdan bir derleme yapabilirsiniz:

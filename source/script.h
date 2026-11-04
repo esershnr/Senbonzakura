@@ -2977,6 +2977,7 @@ public:
 	ResultType DefineClassPropertyXet(LPTSTR aBuf, LPTSTR aEnd);
 	Object *FindClass(LPCTSTR aClassName, size_t aClassNameLength = 0);
 	ResultType ResolveClasses();
+	ResultType ClassResolutionError(LPCTSTR aErrorText, LPCTSTR aName, Object *aObj);
 
 	static SymbolType ConvertWordOperator(LPCTSTR aWord, size_t aLength);
 	static bool EndsWithOperator(LPTSTR aBuf, LPTSTR aBuf_marker);
